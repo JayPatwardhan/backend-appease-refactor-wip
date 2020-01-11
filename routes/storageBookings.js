@@ -1,16 +1,16 @@
-const {storageBooking, validateBooking}=require('../models/storageBooking');
+const {storageBooking, validateStorageBooking}=require('../models/storageBooking');
 const{storageListing, validateStorage}=require('../models/storageListing');
 const{ObjectId}=require('mongodb'); 
-const auth=require('..middleware/auth');
+const auth=require('../middleware/auth');
 const express=require('express');
-const mongoose=require=require('mongoose');
-const geodist=require('geoist');
+const mongoose=require('mongoose');
+const geodist=require('geodist');
 const NodeGeocoder=require('node-geocoder');
 const router=express.Router();
 
 
-router.post('/id', auth, async(req,res)=>{
-    const {error}=validateBooking(req.body);
+router.post('/:id', auth, async(req,res)=>{
+    const {error}=validateStorageBooking(req.body);
     if(error) return res.status(400).send("Invalid Input");
 
     try{
@@ -19,7 +19,7 @@ router.post('/id', auth, async(req,res)=>{
         let e=new Date(req.body.endDate);
         let s=new Date(req.body.startDate);
 
-        if((e.getTime()>found.endDate.getTime()) || (s.getTime()<found.startData.getTime()))
+        if((e.getTime()>found.endDate.getTime()) || (s.getTime()<found.startDate.getTime()))
             return res.status(400).send("Make sure the dates for your booking fall in the dates that the listing is up");
 
         const days=(e.getTime()-s.getTime())/(1000*3600*24);

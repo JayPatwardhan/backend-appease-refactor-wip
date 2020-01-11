@@ -28,7 +28,7 @@ app.use('/api/auth', auth);
 app.use('/api/parkingListings', parkingListings);
 app.use('/api/parkingBookings', parkingBookings);
 app.use('/api/storageListings', storageListings);
-app.use('api/storageBookings', storageBookings);
+app.use('/api/storageBookings', storageBookings);
 
 //listen
 const port = process.env.PORT || 3000;

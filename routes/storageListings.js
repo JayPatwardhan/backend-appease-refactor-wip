@@ -30,11 +30,10 @@ router.post('/', auth, async (req,res) => {
             city: req.body.city,
             state: req.body.state,
             zip: req.body.zip,
-            numberOfSpots: req.body.numberOfSpots,
+            amountOfSpace: req.body.amountOfSpace,
             pricePerDay: req.body.pricePerDay,
             startDate: req.body.startDate,
             endDate: req.body.endDate,
-            space: req.body.space
         });
 
         await storeThis.save();
