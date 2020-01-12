@@ -14,9 +14,13 @@
     "bcrypt": "^3.0.7",
     "config": "^3.2.4",
     "express": "^4.17.1",
+    "geo-nearby": "^2.0.1",
     "geodist": "^0.2.1",
+    "geolib": "^3.2.1",
+    "geolocation-utils": "^1.2.2",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
+    "mathjs": "^6.5.0",
     "mongoose": "^5.8.4",
     "node-geocoder": "^3.25.0",
     "node-open-geocoder": "^4.0.1"

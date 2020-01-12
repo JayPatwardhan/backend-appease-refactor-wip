@@ -51,14 +51,4 @@ router.post('/:id', auth, async(req,res) => {
     }
 });
 
-//get request to get the listings in a certain radius of a distance
-router.get('/', async(req,res) => {
-    try{
-        
-    }
-    catch(err){
-        return res.send(err.message);
-    }
-});
-
 module.exports = router;

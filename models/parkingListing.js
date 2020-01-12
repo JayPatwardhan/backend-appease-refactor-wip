@@ -29,6 +29,9 @@ const parkingSchema = new mongoose.Schema({
     pricePerDay: {type: Number, required: true, min: 0},
     startDate: {type: Date, required: true},
     endDate: {type: Date, required: true},
+    latitude: {type: Number},
+    longitude: {type: Number},
+    distance: {type: Number, default: 0}
     //geometry: geoSchema
 });
 
