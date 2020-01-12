@@ -13,6 +13,11 @@ if (!config.get('jwtPrivateKey')){
     console.error('FATAL ERROR: jwtPrivateKey is NOT defined');
     process.exit(1);
 }
+
+if(!config.get('myAPIKey')){
+    console.error('FATAL ERROR: myAPIKey is NOT defined');
+    process.exit(1);
+}
 // Connect to the db
 mongoose.connect('mongodb://localhost/appease', {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false})
     .then(() => console.log('Connected to MongoDB...'))

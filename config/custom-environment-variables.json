@@ -1,3 +1,4 @@
 {
-    "jwtPrivateKey": "appease_jwtPrivateKey"
+    "jwtPrivateKey": "appease_jwtPrivateKey",
+    "myAPIKey": "appease_myAPIKey"
 }

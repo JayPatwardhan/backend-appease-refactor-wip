@@ -6,6 +6,7 @@ const _ = require('lodash');
 const NodeGeocoder = require('node-geocoder');
 const geolib = require('geolib');
 const Math = require('mathjs');
+const config = require('config');
 const router = express.Router();
 
 //Post request to add a new parking spot to collection
@@ -31,7 +32,7 @@ router.post('/', auth, async(req,res) => {
         const options = {
             provider: 'google',
             httpAdapter: 'https',
-            apiKey: '',
+            apiKey: config.get('myAPIKey'),
             formatter: null
         }
         const geocoder = NodeGeocoder(options);
@@ -91,7 +92,7 @@ router.post('/getlistings', async (req,res) => {
     const options = {
         provider: 'google',
         httpAdapter: 'https',
-        apiKey: '',
+        apiKey: config.get('myAPIKey'),
         formatter: null
     }
     const geocoder = NodeGeocoder(options);
