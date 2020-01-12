@@ -108,7 +108,7 @@ router.post('/getlistings', async (req,res) => {
         };
 
         array.sort((a,b) => (a.distance > b.distance) ? 1 : -1);
-        return res.send(array);
+        return res.send({data : array});
 
     }
     catch(err){
