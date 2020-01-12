@@ -1,7 +1,12 @@
+const mongoose = require('mongoose');
 const express = require('express');
-const router = express.Router();
 const {storageListing, validateStorage} = require('../models/storageListing');
 const auth = require('../middleware/auth');
+const _ =require('lodash');
+const NodeGeocoder= require('node-geocoder');
+const geolib = require('geolib');
+const Math = require('mathjs');
+const router = express.Router();
 
 router.post('/', auth, async (req,res) => {
     const {error} = validateStorage(req.body);
@@ -22,7 +27,20 @@ router.post('/', auth, async (req,res) => {
         );
         if(listing) return res.status(400).send('The listing is already up');
 
-        const storeThis = new storageListing({
+        const options={
+            provider: 'google',
+            httpAdapter: 'https',
+            apiKey:'AIzaSyC4jHoxweqfR-z_E5Ev1qWZdkEVef3mjS8',
+            formatter: null
+        }
+
+        const geocoder = NodeGeocoder(options);
+
+        var location= await geocoder.geocode(req.body.housenumber + req.body.street + req.body.city + req.body.state + req.body.zip, function(err,ress){
+            return ress;
+        });
+
+        storeThis = new storageListing({
             name: req.body.name,
             user: req.user._id,
             houseNumber: req.body.houseNumber,
@@ -34,6 +52,8 @@ router.post('/', auth, async (req,res) => {
             pricePerDay: req.body.pricePerDay,
             startDate: req.body.startDate,
             endDate: req.body.endDate,
+            latitude: location[0].latitude,
+            longitude: location[0].longitude
         });
 
         await storeThis.save();
@@ -46,7 +66,7 @@ router.post('/', auth, async (req,res) => {
 
 router.put('/:id', auth, async(req,res) => {
     try{
-        const listing = storageListing.findOne({_id: req.params.id});
+        const listing = await storageListing.findOne({_id: req.params.id});
         if(!listing) return res.status(400).send('Listing you are looking for not found');
 
         if(req.user._id.toString() === listing.user.toString()){
@@ -60,6 +80,36 @@ router.put('/:id', auth, async(req,res) => {
     }
     catch(err){
         return res.send(err.message);
+    }
+});
+
+
+
+router.post('/getlistings', async (req,res) => {
+    const options = {
+        provider: 'google',
+        httpAdapter: 'https',
+        apiKey: 'AIzaSyC4jHoxweqfR-z_E5Ev1qWZdkEVef3mjS8',
+        formatter: null
+    }
+    const geocoder = NodeGeocoder(options);
+
+    try{
+        const location = await geocoder.geocode(req.body.address, function(err,ress){
+            return ress;
+        });
+
+        const array = await storageListing.find();
+        for(i=0; i<array.length;i++){
+            array[i].distance = Math.sqrt((array[i].latitude - location[0].latitude)*(array[i].latitude - location[0].latitude) + (array[i].longitude - location[0].longitude)*(array[i].longitude - location[0].longitude));
+        };
+
+        array.sort((a,b) => (a.distance > b.distance) ? 1 : -1);
+        return res.send(array);
+
+    }
+    catch(err){
+        return res.send(err);
     }
 });
 

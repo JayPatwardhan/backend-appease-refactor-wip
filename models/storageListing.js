@@ -15,7 +15,11 @@ const storageSchema = new mongoose.Schema({
     amountOfSpace: {type: Number, required: true, min: 0},
     pricePerDay: {type: Number, required: true, min: 0},
     startDate: {type: Date, required: true},
-    endDate: {type: Date, required: true}
+    endDate: {type: Date, required: true},
+    latitude: {type: Number},
+    longitude: {type: Number},
+    distance: {type:Number, default: 0}
+
 });
 
 const storageListing = mongoose.model('StorageListing', storageSchema);

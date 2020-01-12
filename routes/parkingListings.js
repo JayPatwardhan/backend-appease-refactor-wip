@@ -31,7 +31,7 @@ router.post('/', auth, async(req,res) => {
         const options = {
             provider: 'google',
             httpAdapter: 'https',
-            apiKey: '',
+            apiKey: 'AIzaSyC4jHoxweqfR-z_E5Ev1qWZdkEVef3mjS8',
             formatter: null
         }
         const geocoder = NodeGeocoder(options);
@@ -91,7 +91,7 @@ router.post('/getlistings', async (req,res) => {
     const options = {
         provider: 'google',
         httpAdapter: 'https',
-        apiKey: '',
+        apiKey: 'AIzaSyC4jHoxweqfR-z_E5Ev1qWZdkEVef3mjS8',
         formatter: null
     }
     const geocoder = NodeGeocoder(options);
