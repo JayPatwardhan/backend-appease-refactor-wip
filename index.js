@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const config = require('config');
+const cors = require('cors');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
 const parkingListings = require('./routes/parkingListings');
@@ -26,6 +27,7 @@ mongoose.connect('mongodb://localhost/appease', {useNewUrlParser: true, useUnifi
 //middleware
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(cors());
 
 //routes
 app.use('/api/users', users);
