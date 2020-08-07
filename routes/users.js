@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
 
     try{
         let user = await User.findOne({email: req.body.email});
-        if(user) return res.status(400).send('User email already registered: try different email');
+        if(user) return res.send('User email already registered: try different email');
 
         //if user is unique, create user
         user = new User({
@@ -39,7 +39,8 @@ router.post('/', async (req, res) => {
         user.password = await bcrypt.hash(user.password, salt);
 
         await user.save();
-        res.send(_.pick(user, ['_id', 'name', 'email']));
+        //return res.send(_.pick(user, ['_id', 'name', 'email']));
+        return res.send('success')
     }
     catch(err){
         return res.send(err.message);
